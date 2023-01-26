@@ -1,0 +1,12 @@
+name: 'List Mostly Modify Files'
+description: 'List most frequently modified files'
+inputs:
+  number: 
+    description: 'number of most frequently modified files'
+    required: true
+    default: 10
+runs:
+  using: "composite"
+  steps:
+  - run: git log --since="90 days ago" --pretty=format:"" --name-only | grep "[^\s]" | sort | uniq -c | sort -nr | head -n ${{inputs.number}}
+    shell: bash
